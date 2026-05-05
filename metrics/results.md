@@ -6,16 +6,47 @@ after each release tag. The protocol is in
 
 ## v1.0.0 — initial release
 
-The numbers below are populated automatically from the repo's commit
-history. Until the first release tag is cut, this file contains a
-placeholder; reach for `python -m metrics.loc_analysis --markdown`
-locally to see the live numbers any time.
+These are real numbers from this repo's `git log`, captured at the
+time of the v1.0.0 commit set.
 
-```
-   _placeholder_
+| tag | commits | insertions | deletions | net LOC | files |
+|---|---:|---:|---:|---:|---:|
+| ai | 3 | 528 | 0 | 528 | 12 |
+| manual | 4 | 1647 | 0 | 1647 | 23 |
+| mixed | 4 | 782 | 0 | 782 | 8 |
+| merge | 0 | 0 | 0 | 0 | 0 |
+| tooling | 1 | 146 | 0 | 146 | 8 |
+| untagged | 0 | 0 | 0 | 0 | 0 |
 
-   run `python -m metrics.loc_analysis --markdown` from the repo root
-```
+_Total commits: 12_
+
+Share of net LOC over original buckets (`[ai]` + `[manual]` +
+`[mixed]`, excluding `[tooling]` and `[merge]`):
+
+| bucket   | net LOC | share  |
+|----------|--------:|-------:|
+| ai       |     528 | 17.9% |
+| manual   |    1647 | 55.7% |
+| mixed    |     782 | 26.4% |
+| **total**|  **2957** | **100%** |
+
+Re-derive locally with `python -m metrics.loc_analysis --markdown`
+any time — these numbers come from `git log`, not a checked-in
+report.
+
+### Reading these numbers
+
+The breakdown reflects what this repo *is*: a methodology repo
+where the prompt library and the test suite are hand-authored prose
+and code (most of `[manual]`), the worked-example service was built
+collaboratively (most of `[mixed]`), and the boilerplate-heavy
+middleware + routes + Dockerfile were generated under the
+`.cursorrules` contract and reviewed (most of `[ai]`).
+
+A different project — say, a domain-heavy backend — would produce a
+different shape: more `[ai]` for cookie-cutter CRUD, more `[manual]`
+for the bits of business logic that don't have a template to lean
+on. The protocol is the same; the shape varies. That's the point.
 
 ## How to read these numbers
 
