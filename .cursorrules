@@ -1,0 +1,119 @@
+# cursor-vibe-starter — house rules
+
+You are pair-programming with a working security engineer in a small,
+auditable Python codebase. The reader of every diff is *another human*,
+not the agent that wrote it. Optimise for what that human needs to
+understand quickly, not what reads as impressive.
+
+Below is what we expect from you. Treat it as a contract, not a
+suggestion.
+
+────────────────────────────────────────────────────────────────────────
+1. PROJECT CONTEXT
+────────────────────────────────────────────────────────────────────────
+
+  - This is a security-engineering codebase (FastAPI services, OSINT
+    tooling, secure pipelines). Almost every change has a security
+    angle — even a logging tweak can leak secrets, even a rate limiter
+    can become an oracle.
+  - Default to *minimum-surprise* behaviour. If a change crosses an
+    obvious security boundary (auth, crypto, request handling, key
+    storage, deserialisation), call it out in the diff narrative
+    BEFORE producing the code.
+  - Prefer extending existing modules over scattering new ones. If
+    you are unsure where a function belongs, ask.
+
+────────────────────────────────────────────────────────────────────────
+2. STYLE
+────────────────────────────────────────────────────────────────────────
+
+  - Python 3.10+. Type hints everywhere — including private helpers.
+    `from __future__ import annotations` is fine.
+  - Docstrings on public functions/classes only; one-line summary plus
+    a paragraph if the *why* is non-obvious. No "this function does
+    X" boilerplate when X is already in the name.
+  - Comments explain WHY, not WHAT. If the comment says the same thing
+    as the code, delete the comment.
+  - No `from module import *`. No bare `except:`. Always name the
+    exception type.
+  - Dataclasses (or pydantic when validation is needed) over `dict`s
+    for any shape that crosses a function boundary.
+
+────────────────────────────────────────────────────────────────────────
+3. SECURITY (NON-NEGOTIABLE)
+────────────────────────────────────────────────────────────────────────
+
+  - **Never** hardcode credentials, API keys, JWT secrets, or
+    connection strings. Read from `os.getenv` or pydantic-settings
+    with a `.env.example` reference.
+  - SQL: parameterise. No f-strings into a query, ever. Same for
+    LDAP filters, shell commands, redis keys when user-controlled.
+  - Validate ALL external input (HTTP body, query string, headers,
+    files, env vars from untrusted callers) at the boundary with a
+    pydantic model. Trust nothing past a public surface.
+  - Hash anything in storage that doesn't need to be reversed (API
+    keys, sensitive tokens). Use bcrypt or argon2 for passwords; SHA
+    family is *not* a password hash.
+  - Never log a secret, even at DEBUG. If a structured log might
+    contain a token, redact it through the log filter, not by
+    `str.replace` after the fact.
+  - JWT: short expiry on access tokens, rotate refresh tokens, verify
+    the algorithm explicitly (`algorithms=[ALGORITHM]`). Refuse
+    `none`. Validate `iss` and `aud` if you set them.
+
+────────────────────────────────────────────────────────────────────────
+4. TESTING
+────────────────────────────────────────────────────────────────────────
+
+  - Every new public function gets a pytest test. Edge cases first:
+    empty inputs, oversized inputs, malformed inputs, expired tokens,
+    invalid signatures.
+  - Use `pytest`'s function style (no `unittest.TestCase`).
+  - Mock the wire (httpx, redis) — don't mock the code you wrote.
+    `respx` and `fakeredis` are preferred.
+  - Fixtures live in `conftest.py`; tests should not reach into other
+    tests' state.
+
+────────────────────────────────────────────────────────────────────────
+5. FRAMEWORK PREFERENCES
+────────────────────────────────────────────────────────────────────────
+
+  - HTTP: FastAPI (async path operations, `Depends` for auth, pydantic
+    response models). No flask unless explicitly asked.
+  - HTTP client: httpx (sync or async). Never `requests` in async code.
+  - Validation: pydantic v2.
+  - DB: SQLAlchemy 2.x with the typed ORM API; asyncpg for async PG.
+  - Redis: aioredis / redis-py async. Use connection pools.
+  - Logging: stdlib `logging` plus a JSON formatter; no print().
+  - Tests: pytest + pytest-asyncio.
+
+────────────────────────────────────────────────────────────────────────
+6. RESPONSE FORMAT
+────────────────────────────────────────────────────────────────────────
+
+  - Lead with the change. Skip preamble like "Sure! Here is...".
+  - When you make a security-relevant decision, say so explicitly:
+    "I'm refusing to log the request body because it can contain
+    a JWT". One short sentence is plenty.
+  - When you change behaviour that callers depend on, list the
+    callers' files. Don't make me hunt them down later.
+  - When you don't know something, say "I don't know — let me check"
+    and then check. Do not guess types or function signatures.
+  - Never apologise. Just produce a corrected version.
+
+────────────────────────────────────────────────────────────────────────
+7. WHAT NOT TO DO
+────────────────────────────────────────────────────────────────────────
+
+  - Don't add features I didn't ask for.
+  - Don't rewrite working modules to "improve readability".
+  - Don't add backwards-compatibility shims for code that has no
+    callers yet.
+  - Don't write multi-paragraph docstrings unless the function is
+    genuinely subtle.
+  - Don't write a comment that just narrates the next line of code.
+  - Don't autoformat unrelated files.
+
+────────────────────────────────────────────────────────────────────────
+~ AMB · ORCID 0009-0007-2787-943X · v1.0 · 2026 ~
+────────────────────────────────────────────────────────────────────────
