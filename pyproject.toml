@@ -1,0 +1,13 @@
+[project]
+name = "cursor-vibe-starter"
+version = "1.0.0"
+description = "Reference workspace + prompt-template library + worked FastAPI security microservice for AI-directed development."
+readme = "README.md"
+requires-python = ">=3.10"
+license = {file = "LICENSE"}
+authors = [{name = "Ali Murtaza Bhutto"}]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["example/security-microservice/tests"]
+pythonpath = ["example/security-microservice"]

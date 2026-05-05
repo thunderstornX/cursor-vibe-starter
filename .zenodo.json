@@ -1,0 +1,32 @@
+{
+  "title": "cursor-vibe-starter: A reference workspace and prompt-template library for AI-directed security engineering",
+  "description": "An opinionated Cursor IDE configuration, twelve prompt templates with a strict five-part structure, and a complete worked example: a FastAPI security microservice with JWT auth, Redis rate limiting, structured JSON logging, and a passing pytest suite. Includes a `loc_analysis.py` script that parses the repo's own git log to break out [ai] vs [manual] vs [mixed] commits as a measured-not-claimed productivity record.",
+  "creators": [
+    {
+      "name": "Bhutto, Ali Murtaza",
+      "orcid": "0009-0007-2787-943X",
+      "affiliation": "Independent Researcher"
+    }
+  ],
+  "license": "MIT",
+  "keywords": [
+    "vibe coding",
+    "AI-directed development",
+    "Cursor IDE",
+    "prompt engineering",
+    "software methodology",
+    "FastAPI",
+    "security engineering"
+  ],
+  "communities": [
+    {"identifier": "ai-safety"}
+  ],
+  "related_identifiers": [
+    {
+      "identifier": "https://github.com/thunderstornX/cursor-vibe-starter",
+      "relation": "isSupplementTo",
+      "scheme": "url"
+    }
+  ],
+  "upload_type": "software"
+}
