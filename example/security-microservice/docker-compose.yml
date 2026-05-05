@@ -1,0 +1,42 @@
+# Dev-friendly stack: app + redis + a tiny named volume so dev state
+# survives container recreates. Production deployments would split
+# this into proper k8s manifests; the comments at each step name the
+# things that change for prod (TLS, secret manager, replicas).
+
+services:
+  app:
+    build: .
+    image: cursor-vibe/security-microservice:1.0.0
+    env_file:
+      - .env
+    environment:
+      - REDIS_URL=redis://redis:6379/0
+    depends_on:
+      redis:
+        condition: service_healthy
+    ports:
+      - "8080:8080"
+    restart: unless-stopped
+    networks:
+      - app-net
+
+  redis:
+    image: redis:7-alpine          # pin major; never `latest`
+    command: ["redis-server", "--save", "", "--appendonly", "no"]
+    volumes:
+      - redis-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+    restart: unless-stopped
+    networks:
+      - app-net
+
+volumes:
+  redis-data:
+
+networks:
+  app-net:
+    driver: bridge
