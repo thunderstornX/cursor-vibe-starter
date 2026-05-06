@@ -43,6 +43,7 @@ type-hint discipline, security non-negotiables (no hardcoded secrets,
 parameterised SQL, JWT alg-confusion guards), testing requirements,
 framework preferences, and a list of explicit "don't"s.
 
+<a id="prompt-templates"></a>
 ### 2. Skim the prompt library
 
 ```

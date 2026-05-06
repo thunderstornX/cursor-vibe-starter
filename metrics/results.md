@@ -12,27 +12,29 @@ time of the v1.0.0 commit set.
 | tag | commits | insertions | deletions | net LOC | files |
 |---|---:|---:|---:|---:|---:|
 | ai | 3 | 528 | 0 | 528 | 12 |
-| manual | 4 | 1647 | 0 | 1647 | 23 |
+| manual | 5 | 1686 | 8 | 1678 | 23 |
 | mixed | 4 | 782 | 0 | 782 | 8 |
 | merge | 0 | 0 | 0 | 0 | 0 |
 | tooling | 1 | 146 | 0 | 146 | 8 |
 | untagged | 0 | 0 | 0 | 0 | 0 |
 
-_Total commits: 12_
+_Total commits: 13_
 
 Share of net LOC over original buckets (`[ai]` + `[manual]` +
 `[mixed]`, excluding `[tooling]` and `[merge]`):
 
 | bucket   | net LOC | share  |
 |----------|--------:|-------:|
-| ai       |     528 | 17.9% |
-| manual   |    1647 | 55.7% |
-| mixed    |     782 | 26.4% |
-| **total**|  **2957** | **100%** |
+| ai       |     528 | 17.7% |
+| manual   |    1678 | 56.2% |
+| mixed    |     782 | 26.2% |
+| **total**|  **2988** | **100%** |
 
 Re-derive locally with `python -m metrics.loc_analysis --markdown`
 any time — these numbers come from `git log`, not a checked-in
-report.
+report. The table above reflects the v1.0.0 commit set including
+this very file (the act of pasting the table is itself a `[manual]`
+commit, hence one of the five).
 
 ### Reading these numbers
 
