@@ -9,8 +9,15 @@ type: software
 license: MIT
 repository-code: "https://github.com/thunderstornX/cursor-vibe-starter"
 version: "1.0.0"
-date-released: "2026-05-03"
-doi: "10.5281/zenodo.XXXXXXX"
+date-released: "2026-06-01"
+doi: "10.5281/zenodo.20480451"
+identifiers:
+  - type: doi
+    value: "10.5281/zenodo.20480450"
+    description: "Concept DOI (always resolves to the latest version)"
+  - type: doi
+    value: "10.5281/zenodo.20480451"
+    description: "Version DOI"
 keywords:
   - vibe coding
   - AI-directed development
