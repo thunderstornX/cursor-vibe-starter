@@ -1,6 +1,6 @@
 # cursor-vibe-starter
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20480450.svg)](https://doi.org/10.5281/zenodo.20480450) <!-- DOI placeholder; replaced on first Zenodo deposit -->
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20480450.svg)](https://doi.org/10.5281/zenodo.20480450)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Tests](https://img.shields.io/badge/tests-20%20passing-brightgreen)](#tests)
 [![Prompts](https://img.shields.io/badge/prompt%20templates-12-blue)](#prompt-templates)
